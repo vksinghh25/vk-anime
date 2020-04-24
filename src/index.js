@@ -1,12 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import Anime from './Anime';
 import * as serviceWorker from './serviceWorker';
+import { ApolloClient } from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { HttpLink } from 'apollo-link-http';
+import { ApolloProvider } from '@apollo/react-hooks';
+
+const cache = new InMemoryCache();
+const link = new HttpLink({
+  // uri: 'https://32ypr38l61.sse.codesandbox.io/'
+  uri: 'https://graphql.anilist.co/'
+})
+
+const client = new ApolloClient({
+  cache,
+  link
+})
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client={client}><Anime /></ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
